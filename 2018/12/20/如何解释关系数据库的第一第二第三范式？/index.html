@@ -1,0 +1,703 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    
+
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="如何解释关系数据库的第一第二第三范式？, 相由心生的博客">
+    <meta name="description" content="按照教材中的定义，范式是“符合某一种级别的关系模式的集合，表示一个关系内部各属性之间的联系的合理化程度”。很晦涩吧？实际上你可以把它粗略地理解为一张数据表的表结构所符合的某种设计标准的级别。
+本文转自知乎刘慰教师范式介绍   首先要明白”范">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>如何解释关系数据库的第一第二第三范式？ | 相由心生的博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+</head>
+
+<body>
+
+<header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="container">
+            <div class="nav-wrapper">
+                <div class="brand-logo">
+                    <a href="/" class="waves-effect waves-light">
+                        
+                        <img src="/medias/logo.png" class="logo-img hide-on-small-only">
+                        
+                        <span class="logo-span">相由心生的博客</span>
+                    </a>
+                </div>
+                <a href="#" data-activates="mobile-nav" class="button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>Index</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>Tags</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>Categories</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>Archives</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>About</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>Friends</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="https://hexo.io/themes/#Simple" class="waves-effect waves-light">
+            
+            <i class="fa fa-street-view"></i>
+            
+            <span>Themes</span>
+        </a>
+    </li>
+    
+    <li>
+        <a id="toggleSearch" class="waves-effect waves-light">
+            <i id="searchIcon" class="mdi-action-search"></i>
+        </a>
+    </li>
+
+</ul>
+
+<div class="side-nav" id="mobile-nav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">相由心生的博客</div>
+        <div class="logo-desc">
+            
+            程序猿.算法爱好者.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                Index
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                Tags
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                Categories
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                Archives
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                About
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                Friends
+            </a>
+        </li>
+        
+        <li>
+            <a href="https://hexo.io/themes/#Simple" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-street-view"></i>
+                
+                Themes
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/fuhongyu" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+
+    <div class="social-link"><a href="https://github.com/fuhongyu" class="tooltipped" target="_blank" data-tooltip="我的GitHub" data-position="top" data-delay="50">
+    <i class="fa fa-github"></i>
+</a>
+<a href="mailto:15634408337@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+    <i class="fa fa-envelope-open"></i>
+</a>
+<a href="#!" class="tooltipped" data-tooltip="QQ联系我:1378844851" data-position="top" data-delay="50">
+    <i class="fa fa-qq"></i>
+</a>
+<a href="https://www.nowcoder.com/profile/93389833" class="tooltipped" data-tooltip="牛客网" data-position="top" data-delay="50">
+    <i class="fa fa-resistance"></i>
+</a>
+<a href="https://me.csdn.net/fhy569039351" class="tooltipped" data-tooltip="我的csdn" data-position="top" data-delay="50">
+    <i class="fa fa-lastfm"></i>
+</a>
+<a href="https://leetcode-cn.com/problemset/all/" class="tooltipped" data-tooltip="领扣中国" data-position="top" data-delay="50">
+    <i class="fa fa-users"></i>
+</a>
+</div>
+</div>
+
+            </div>
+        </div>
+
+        
+        <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/fuhongyu" class="github-corner tooltipped hide-on-med-and-down" target="_blank" data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewbox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/>
+    </svg>
+</a>
+        
+    </nav>
+</header>
+
+
+
+
+
+<div class="bg-cover post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        如何解释关系数据库的第一第二第三范式？
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="container content">
+
+    
+    <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            
+            <div class="post-info">
+                
+
+                <span class="post-date">
+                    <i class="fa fa-clock-o fa-fw"></i>2018-12-20
+                </span>
+            </div>
+        </div>
+        <hr>
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>按照教材中的定义，范式是“符合某一种级别的关系模式的集合，表示一个关系内部各属性之间的联系的合理化程度”。很晦涩吧？实际上你可以把它粗略地理解为一张数据表的表结构所符合的某种设计标准的级别。</p>
+<h6 id="本文转自知乎刘慰教师"><a href="#本文转自知乎刘慰教师" class="headerlink" title="本文转自知乎刘慰教师"></a>本文转自知乎<a href="https://www.zhihu.com/question/24696366" target="_blank" rel="noopener">刘慰教师</a></h6><h1 id="范式介绍"><a href="#范式介绍" class="headerlink" title="范式介绍"></a>范式介绍</h1><p>   首先要明白”范式（NF）”是什么意思。按照教材中的定义，范式是“符合某一种级别的关系模式的集合，表示一个关系内部各属性之间的联系的合理化程度”。很晦涩吧？实际上你可以把它粗略地理解为一张数据表的表结构所符合的某种设计标准的级别。就像家里装修买建材，最环保的是E0级，其次是E1级，还有E2级等等。数据库范式也分为1NF，2NF，3NF，BCNF，4NF，5NF。一般在我们设计关系型数据库的时候，最多考虑到BCNF就够。符合高一级范式的设计，必定符合低一级范式，例如符合2NF的关系模式，必定符合1NF。</p>
+<h1 id="第一范式"><a href="#第一范式" class="headerlink" title="第一范式"></a>第一范式</h1><h2 id="1NF的定义为：符合1NF的关系中的每个属性都不可再分。"><a href="#1NF的定义为：符合1NF的关系中的每个属性都不可再分。" class="headerlink" title="1NF的定义为：符合1NF的关系中的每个属性都不可再分。"></a>1NF的定义为：符合1NF的关系中的每个属性都不可再分。</h2><p>符合1NF的关系（你可以理解为数据表。“关系模式”和“关系”的区别，类似于面向对象程序设计中”类“与”对象“的区别。”关系“是”关系模式“的一个实例，你可以把”关系”理解为一张带数据的表，而“关系模式”是这张数据表的表结构。<br>表1所示的情况，就不符合1NF的要求：</p>
+<p><img src="https://img-blog.csdnimg.cn/20181220111349147.png" alt="表1"></p>
+<p>实际上，<strong>1NF是所有关系型数据库的最基本要求</strong>，你在关系型数据库管理系统（RDBMS），例如SQL Server，Oracle，MySQL中创建数据表的时候，如果数据表的设计不符合这个最基本的要求，那么操作一定是不能成功的。也就是说，<strong>只要在RDBMS中已经存在的数据表，一定是符合1NF的</strong>。<br>如果我们要在RDBMS中表现表中的数据，就得设计为表2的形式：</p>
+<p> <img src="https://img-blog.csdnimg.cn/20181220111517383.png" alt="表2"><br>但是仅仅符合1NF的设计，仍然会存在<strong>数据冗余过大，插入异常，删除异常，修改异常</strong>的问题，例如对于表3中的设计：<br><img src="https://img-blog.csdnimg.cn/20181220111559788.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZoeTU2OTAzOTM1MQ==,size_16,color_FFFFFF,t_70" alt="表3"></p>
+<ol>
+<li>每一名学生的学号、姓名、系名、系主任这些数据重复多次。每个系与对应的系主任的数据也重复多次——<strong>数据冗余过大</strong></li>
+<li>假如学校新建了一个系，但是暂时还没有招收任何学生（比如3月份就新建了，但要等到8月份才招生），那么是无法将系名与系主任的数据单独地添加到数据表中去的 ——<strong>插入异常</strong><br>根据三种关系完整性约束中实体完整性的要求，关系中的<strong>码</strong>所包含的任意一个属性都不能为空，所有属性的组合也不能重复。为了满足此要求，图中的表，只能将<strong>学号与课名的组合</strong>作为码，否则就无法唯一地区分每一条记录。[<strong>码</strong>：关系中的某个属性或者某几个属性的组合，用于区分每个元组（可以把“元组”理解为一张表中的每条记录，也就是每一行）]。</li>
+<li>假如将某个系中所有学生相关的记录都删除，那么所有系与系主任的数据也就随之消失了（一个系所有学生都没有了，并不表示这个系就没有了）。——<strong>删除异常</strong></li>
+<li><p>假如李小明转系到法律系，那么为了保证数据库中数据的一致性，需要修改三条记录中系与系主任的数据。——<strong>修改异常</strong>。<br>正因为仅符合1NF的数据库设计存在着这样那样的问题，我们需要提高设计标准，去掉导致上述四种问题的因素，使其符合更高一级的范式（2NF），这就是所谓的“规范化”。</p>
+<h1 id="第二范式"><a href="#第二范式" class="headerlink" title="第二范式"></a>第二范式</h1><h2 id="2NF在1NF的基础之上，消除了非主属性对于码的部分函数依赖。"><a href="#2NF在1NF的基础之上，消除了非主属性对于码的部分函数依赖。" class="headerlink" title="2NF在1NF的基础之上，消除了非主属性对于码的部分函数依赖。"></a>2NF在1NF的基础之上，消除了非主属性对于码的部分函数依赖。</h2><p>第二范式（2NF）在关系理论中的严格定义我这里就不多介绍了（因为涉及到的铺垫比较多），只需要了解2NF对1NF进行了哪些改进即可。其改进是，2NF在1NF的基础之上，消除了非主属性对于码的部分函数依赖。接下来对这句话中涉及到的四个概念———<strong>“函数依赖”、“码”、“非主属性”、与“部分函数依赖” </strong>进行一下解释。</p>
+</li>
+</ol>
+<h3 id="函数依赖"><a href="#函数依赖" class="headerlink" title="函数依赖"></a>函数依赖</h3><p>我们可以这么理解（但并不是特别严格的定义）：若在一张表中，在属性（或属性组）X的值确定的情况下，必定能确定属性Y的值，那么就可以说<strong>Y函数依赖于X，写作 X → Y</strong>。也就是说，在数据表中，不存在任意两条记录，它们在X属性（或属性组）上的值相同，而在Y属性上的值不同。这也  就是“函数依赖”名字的由来，类似于函数关系 y = f(x)，在x的值确定的情况下，y的值一定是确定的。</p>
+<p>例如，对于表3中的数据，找不到任何一条记录，它们的学号相同而对应的姓名不同。所以我们可以说<strong>姓名函数依赖于学号，写作 学号 → 姓名</strong>。但是反过来，因为可能出现同名的学生，所以有可能不同的两条学生记录，它们在姓名上的值相同，但对应的学号不同，所以我们不能说学号函数依赖于姓名。</p>
+<p> <strong>表中,其他的函数依赖关系还有如：</strong></p>
+<ul>
+<li>系名 → 系主任</li>
+<li>学号 → 系主任</li>
+<li><p>（学号，课名） → 分数</p>
+<p><strong>但以下函数依赖关系则不成立：</strong></p>
+</li>
+<li>学号 → 课名</li>
+<li>学号 → 分数</li>
+<li>课名 → 系主任</li>
+<li>（学号，课名）→ 姓名<br>从“函数依赖”这个概念展开，还会有三个概念：<h5 id="完全函数依赖"><a href="#完全函数依赖" class="headerlink" title="完全函数依赖"></a>完全函数依赖</h5>在一张表中，若 X → Y，且对于 X 的任何一个真子集（假如属性组 X 包含超过一个属性的话），X ‘ → Y 不成立，那么我们称 Y 对于 X 完全函数依赖，记作：<br><img src="https://img-blog.csdnimg.cn/20181220113000872.png" alt="无"><br>例如： 学号 F→ 姓名 （学号，课名） F→ 分数  （注：因为同一个的学号对应的分数不确定，同一个课名对应的分数也不确定）</li>
+</ul>
+<h5 id="部分函数依赖"><a href="#部分函数依赖" class="headerlink" title="部分函数依赖"></a>部分函数依赖</h5><p>假如 Y 函数依赖于 X，但同时 Y 并不完全函数依赖于 X，那么我们就称 Y 部分函数依赖于 X，记作 ：<br><img src="https://img-blog.csdnimg.cn/20181220113146810.png" alt="在这里插入图片描述"><br>例如：（学号，课名） P→ 姓名</p>
+<h5 id="传递函数依赖"><a href="#传递函数依赖" class="headerlink" title="传递函数依赖"></a>传递函数依赖</h5><p>假如 Z 函数依赖于 Y，且 Y 函数依赖于 X （基于『Y 不包含于 X，且 X 不函数依赖于 Y』这个前提），那么我们就称 Z 传递函数依赖于 X ，记作：<br><img src="https://img-blog.csdnimg.cn/20181220141747431.png" alt="在这里插入图片描述"></p>
+<h3 id="码"><a href="#码" class="headerlink" title="码"></a>码</h3><p>设 K 为某表中的一个属性或属性组，若除 K 之外的所有属性都<strong>完全函数依赖</strong>于 K（这个“完全”不要漏了），那么我们称 K 为候选码，简称为码。<br>在实际中我们通常可以理解为：假如当 K 确定的情况下，该表除 K 之外的所有属性的值也就随之确定，那么 K 就是码。<br>一张表中可以有超过一个码。（实际应用中为了方便，通常选择其中的一个码作为<strong>主码</strong>）<br>例如：对于表3，（学号、课名）这个属性组就是码。该表中有且仅有这一个码。（假设所有课没有重名的情况）</p>
+<h3 id="非主属性"><a href="#非主属性" class="headerlink" title="非主属性"></a>非主属性</h3><p>包含在任何一个码中的属性成为主属性。<br>例如：<br>对于表3，主属性就有两个，学号 与 课名。</p>
+<p>终于可以回过来看2NF了。<br>首先，我们需要判断，表3是否符合2NF的要求？<br>根据2NF的定义，判断的依据实际上就是看数据表中是否存在非主属性对于码的部分函数依赖。若存在，则数据表最高只符合1NF的要求，若不存在，则符合2NF的要求。<br><strong>判断的方法是：</strong><br>第一步：找出数据表中所有的码。<br>第二步：根据第一步所得到的码，找出所有的主属性。<br>第三步：数据表中，除去所有的主属性，剩下的就都是非主属性了。<br>第四步：查看是否存在非主属性对码的部分函数依赖。<br>对于表3，根据前面所说的四步，<strong>我们可以这么做</strong>：<br>第一步：查看所有每一单个属性，当它的值确定了，是否剩下的所有属性值都能确定。查看所有包含有两个属性的属性组，当它的值确定了，是否剩下的所有属性值都能确定。……查看所有包含了六个属性，也就是所有属性的属性组，当它的值确定了，是否剩下的所有属性值都能确定。看起来很麻烦是吧，但是这里有一个诀窍，就是假如A是码，那么所有包含了A的属性组，如（A，B）、（A，C）、（A，B，C）等等，都不是码了（因为作为码的要求里有一个“完全函数依赖”）。<br>图4表示了表中所有的函数依赖关系：<br><img src="https://img-blog.csdnimg.cn/20181220143506956.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZoeTU2OTAzOTM1MQ==,size_16,color_FFFFFF,t_70" alt="图4"></p>
+<p>这一步完成以后，可以得到，表3的码只有一个，就是（学号、课名）。<br>第二步：主属性有两个：学号 与 课名<br>第三步：非主属性有四个：姓名、系名、系主任、分数<br>第四步：对于（学号，课名） → 姓名，有 学号 → 姓名，存在非主属性 <strong>姓名</strong> 对码（学号，课名）的部分函数依赖。<br>对于（学号，课名）→ 系名，有 学号 → 系名，存在非主属性 <strong>系名</strong> 对码（学号，课名）的部分函数依赖。<br>对于（学号，课名） → 系主任，有 学号 → 系主任，存在非主属性 <strong>系主任</strong> 对码（学号，课名）的部分函数依赖。所以表3存在非主属性对于码的部分函数依赖，最高只符合1NF的要求，不符合2NF的要求。</p>
+<h3 id="部分函数依赖-1"><a href="#部分函数依赖-1" class="headerlink" title="部分函数依赖"></a>部分函数依赖</h3><p>为了让表3符合2NF的要求，我们必须消除这些<strong>部分函数依赖</strong>，只有一个办法，就是将大数据表拆分成两个或者更多个更小的数据表，在拆分的过程中，要达到更高一级范式的要求，这个过程叫做”<strong>模式分解</strong>“。<br>模式分解的方法不是唯一的，以下是其中一种方法：<br><strong>选课（学号，课名，分数）</strong><br><strong>学生（学号，姓名，系名，系主任）</strong><br>我们先来判断以下，选课表与学生表，是否符合了2NF的要求？<br>   对于选课表，其码是（学号，课名），主属性是学号和课名，非主属性是分数，学号确定，并不能唯一确定分数，课名确定，也不能唯一确定分数，所以不存在非主属性分数对于码 （学号，课名）的部分函数依赖，所以此表符合2NF的要求。<br>   对于学生表，其码是学号，主属性是学号，非主属性是姓名、系名和系主任，因为码只有一个属性，所以不可能存在非主属性对于码 的部分函数依赖，所以此表符合2NF的要求。<br>图5表示了模式分解以后的新的函数依赖关系<br><img src="https://img-blog.csdnimg.cn/20181220144112622.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZoeTU2OTAzOTM1MQ==,size_16,color_FFFFFF,t_70" alt="图5"><br>下图，表示了模式分解以后新的数据：<br><img src="https://img-blog.csdnimg.cn/20181220144157364.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZoeTU2OTAzOTM1MQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>（这里还涉及到一个如何进行模式分解才是正确的知识点，先不介绍了）</p>
+<p><strong>现在我们来看一下，进行同样的操作，是否还存在着之前的那些问题？</strong></p>
+<ol>
+<li>李小明转系到法律系只需要修改一次李小明对应的系的值即可。——有改进</li>
+<li>数据冗余是否减少了？学生的姓名、系名与系主任，不再像之前一样重复那么多次了。——有改进</li>
+<li>删除某个系中所有的学生记录该系的信息仍然全部丢失。——无改进</li>
+<li>插入一个尚无学生的新系的信息。因为学生表的码是学号，不能为空，所以此操作不被允许。——无改进</li>
+</ol>
+<p>所以说，仅仅符合2NF的要求，很多情况下还是不够的，而出现问题的原因，在于仍然存在非主属性系主任对于码学号的<strong>传递函数依赖</strong>。为了能进一步解决这些问题，我们还需要将符合2NF要求的数据表改进为符合3NF的要求。</p>
+<h1 id="第三范式"><a href="#第三范式" class="headerlink" title="第三范式"></a>第三范式</h1><h2 id="3NF在2NF的基础之上，消除了非主属性对于码的传递函数依赖。"><a href="#3NF在2NF的基础之上，消除了非主属性对于码的传递函数依赖。" class="headerlink" title="3NF在2NF的基础之上，消除了非主属性对于码的传递函数依赖。"></a>3NF在2NF的基础之上，消除了非主属性对于码的传递函数依赖。</h2><p>3NF在2NF的基础之上，消除了非主属性对于码的传递函数依赖，也就是说， <strong>如果存在非主属性对于码的传递函数依赖，则不符合3NF的要求</strong>。接下来我们看看表4中的设计，是否符合3NF的要求。<br> 对于选课表，主码为（学号，课名），主属性为学号和课名，非主属性只有一个，为分数，不可能存在传递函数依赖，所以选课表的设计，符合3NF的要求。对于学生表，主码为学号，主属性为学号，非主属性为姓名、系名和系主任。因为 学号 → 系名，同时 系名 → 系主任，所以存在<strong>非主属性系主任对于码学号的传递函数依赖</strong>，所以学生表的设计，不符合3NF的要求。<br> 为了让数据表设计达到3NF，我们必须进一步进行模式分解为以下形式：<br> <strong>选课（学号，课名，分数）<br> 学生（学号，姓名，系名）<br> 系（系名，系主任）</strong><br> 对于选课表，符合3NF的要求，之前已经分析过了。<br> 对于学生表，码为学号，主属性为学号，非主属性为系名，不可能存在非主属性对于码的传递函数依赖，所以符合3NF的要求。<br> 对于系表，码为系名，主属性为系名，非主属性为系主任，不可能存在非主属性对于码的传递函数依赖（至少要有三个属性才可能存在传递函数依赖关系），所以符合3NF的要求。<br><strong>新的依赖关系如图：</strong><br><img src="https://img-blog.csdnimg.cn/20181220144621632.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZoeTU2OTAzOTM1MQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p><strong>新的数据如表：</strong><br><img src="https://img-blog.csdnimg.cn/20181220144644734.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZoeTU2OTAzOTM1MQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>现在我们来看一下，进行同样的操作，是否还存在着之前的那些问题？</p>
+<ol>
+<li>删除某个系中所有的学生记录，该系的信息不会丢失。——有改进</li>
+<li>插入一个尚无学生的新系的信息， 因为系表与学生表目前是独立的两张表，所以不影响。——有改进</li>
+<li>数据冗余更加少了。——有改进</li>
+</ol>
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>由此可见，符合3NF要求的数据库设计，基本上解决了数据冗余过大，插入异常，修改异常，删除异常的问题。当然，在实际中，往往为了性能上或者应对扩展的需要，经常 做到2NF或者1NF，但是作为数据库设计人员，至少应该知道，3NF的要求是怎样的。</p>
+<h1 id="BCNF范式"><a href="#BCNF范式" class="headerlink" title="BCNF范式"></a>BCNF范式</h1><h3 id="BCNF范式不存在主属性对于码的部分函数依赖与传递函数依赖"><a href="#BCNF范式不存在主属性对于码的部分函数依赖与传递函数依赖" class="headerlink" title="BCNF范式不存在主属性对于码的部分函数依赖与传递函数依赖"></a>BCNF范式不存在主属性对于码的<strong>部分函数依赖与传递函数依赖</strong></h3><p>要了解 BCNF 范式，那么先看这样一个问题：<br>若：某公司有若干个仓库；每个仓库只能有一名管理员，一名管理员只能在一个仓库中工作；一个仓库中可以存放多种物品，一种物品也可以存放在不同的仓库中。每种物品在每个仓库中都有对应的数量。那么关系模式 仓库（仓库名，管理员，物品名，数量） 属于哪一级范式？<br>答：<br><strong>函数依赖集：</strong>仓库名 → 管理员，管理员 → 仓库名，（仓库名，物品名）→ 数量<br><strong>码：</strong>（管理员，物品名），（仓库名，物品名）<br><strong>主属性：</strong>仓库名、管理员、物品名<br><strong>非主属性：</strong>数量<br><strong>∵ 不存在非主属性对码的部分函数依赖和传递函数依赖。∴ 此关系模式属于3NF。</strong><br>基于此关系模式的关系（具体的数据）可能如图所示：</p>
+<p><img src="https://img-blog.csdnimg.cn/20181220145111296.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZoeTU2OTAzOTM1MQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><strong>好，既然此关系模式已经属于了 3NF，那么这个关系模式是否存在问题呢</strong>？<br>我们来看以下几种操作：<br><strong>先新增加一个仓库，但尚未存放任何物品，是否可以为该仓库指派管理员？</strong><br>——不可以，因为物品名也是主属性，根据实体完整性的要求，主属性不能为空。<br><strong>某仓库被清空后，需要删除所有与这个仓库相关的物品存放记录，会带来什么问题？</strong><br>——仓库本身与管理员的信息也被随之删除了。<br><strong>如果某仓库更换了管理员，会带来什么问题？</strong><br>——这个仓库有几条物品存放记录，就要修改多少次管理员信息。<br><strong>从这里我们可以得出结论：</strong><br>在某些特殊情况下，即使关系模式符合 3NF 的要求，仍然存在着插入异常，修改异常与删除异常的问题，仍然不是 ”好“ 的设计。<br><strong>造成此问题的原因：</strong><br>存在着主属性对于码的<strong>部分函数依赖与传递函数依赖</strong>。（在此例中就是存在主属性【仓库名】对于码【（管理员，物品名）】的部分函数依赖。解决办法就是要在 3NF 的基础上消除主属性对于码的部分与传递函数依赖：<br>仓库（仓库名，管理员）<br>库存（仓库名，物品名，数量）<br>这样，之前的插入异常，修改异常与删除异常的问题就被解决了。<br>以上就是关于 BCNF 的解释。</p>
+
+            </div>
+            <hr>
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff;
+        background-color: #22AB38;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff;
+        background-color: #019FE8;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a class="reward-link btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs">
+                        <li class="tab wechat-tab waves-effect waves-light"><a class="active" href="#wechat">微信</a></li>
+                        <li class="tab alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                    </ul>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('#reward .reward-link').on('click', function () {
+            $('#rewardModal').openModal();
+        });
+
+        $('#rewardModal .close').on('click', function () {
+            $('#rewardModal').closeModal();
+        });
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            <div class="reprint">
+                <p>
+                    <span class="reprint-tip">转载请注明: </span>
+                    <a href="http://yoursite.com" class="b-link-green">相由心生的博客</a>
+                    <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
+                    <a href="/2018/12/20/如何解释关系数据库的第一第二第三范式？/" class="b-link-green">如何解释关系数据库的第一第二第三范式？</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: '',
+        owner: '',
+        admin: null,
+        id: '2018-12-20T21-02-51',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">上一篇</div>
+            <div class="card">
+                <a href="/2018/12/21/剑指Offer-题48 ：最长不含重复字符的子字符串/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="剑指Offer-48 ：最长不含重复字符的子字符串">
+                        
+                        <span class="card-title">剑指Offer-48 ：最长不含重复字符的子字符串</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary">题目：最长不含重复字符的子字符串​      请从字符串中找出一个最长的不包含重复字符的子字符串，计算该最长子字符串的长度。假设字符串中只包含从’a’到’z’的字符。例如，在字符串中”arabcacfr”，最长非重复子字符串为”acfr”，</div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2018-12-21
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-user fa-fw"></i>
+                            付红玉
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">本篇</div>
+            <div class="card">
+                <a href="/2018/12/20/如何解释关系数据库的第一第二第三范式？/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="如何解释关系数据库的第一第二第三范式？">
+                        
+                        <span class="card-title">如何解释关系数据库的第一第二第三范式？</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary">按照教材中的定义，范式是“符合某一种级别的关系模式的集合，表示一个关系内部各属性之间的联系的合理化程度”。很晦涩吧？实际上你可以把它粗略地理解为一张数据表的表结构所符合的某种设计标准的级别。
+本文转自知乎刘慰教师范式介绍   首先要明白”范</div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-12-20
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-user fa-fw"></i>
+                            付红玉
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+    
+
+</main>
+
+
+<footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            本站由&copy;<a href="https://blinkfox.github.io/" target="_blank">Blinkfox</a>基于
+            <a href="https://hexo.io/" target="_blank">Hexo</a> 采用
+            <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">hexo-theme-matery</a>的主题搭建.
+        </div>
+        <div class="col s12 m4 l4 social-link"><a href="https://github.com/fuhongyu" class="tooltipped" target="_blank" data-tooltip="我的GitHub" data-position="top" data-delay="50">
+    <i class="fa fa-github"></i>
+</a>
+<a href="mailto:15634408337@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+    <i class="fa fa-envelope-open"></i>
+</a>
+<a href="#!" class="tooltipped" data-tooltip="QQ联系我:1378844851" data-position="top" data-delay="50">
+    <i class="fa fa-qq"></i>
+</a>
+<a href="https://www.nowcoder.com/profile/93389833" class="tooltipped" data-tooltip="牛客网" data-position="top" data-delay="50">
+    <i class="fa fa-resistance"></i>
+</a>
+<a href="https://me.csdn.net/fhy569039351" class="tooltipped" data-tooltip="我的csdn" data-position="top" data-delay="50">
+    <i class="fa fa-lastfm"></i>
+</a>
+<a href="https://leetcode-cn.com/problemset/all/" class="tooltipped" data-tooltip="领扣中国" data-position="top" data-delay="50">
+    <i class="fa fa-users"></i>
+</a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+<!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title">搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字" class="search-input" autofocus>
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+</script>
+<!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+<script src="/libs/materialize/js/materialize.min.js"></script>
+<script src="/libs/masonry/masonry.pkgd.min.js"></script>
+<script src="/libs/aos/aos.js"></script>
+<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+<script src="/js/matery.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+</body>
+</html>

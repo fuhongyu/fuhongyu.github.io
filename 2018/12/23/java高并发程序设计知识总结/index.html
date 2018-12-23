@@ -1,0 +1,864 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    
+
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="java高并发程序设计知识总结, 相由心生的博客">
+    <meta name="description" content="基础概念最近把《实战java高并发程序设计》一书看了两遍，很多知识不加积累很快就忘记了，在此对java高并发这块知识进行总结，一方面自己回顾方法，另一方面可以给大家提供方便。
+
+线程的母亲——进程
+进程（Process）是计算机中的程序关于">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>java高并发程序设计知识总结 | 相由心生的博客</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+</head>
+
+<body>
+
+<header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="container">
+            <div class="nav-wrapper">
+                <div class="brand-logo">
+                    <a href="/" class="waves-effect waves-light">
+                        
+                        <img src="/medias/logo.png" class="logo-img hide-on-small-only">
+                        
+                        <span class="logo-span">相由心生的博客</span>
+                    </a>
+                </div>
+                <a href="#" data-activates="mobile-nav" class="button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>Index</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>Tags</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>Categories</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>Archives</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>About</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>Friends</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="https://hexo.io/themes/#Simple" class="waves-effect waves-light">
+            
+            <i class="fa fa-street-view"></i>
+            
+            <span>Themes</span>
+        </a>
+    </li>
+    
+    <li>
+        <a id="toggleSearch" class="waves-effect waves-light">
+            <i id="searchIcon" class="mdi-action-search"></i>
+        </a>
+    </li>
+
+</ul>
+
+<div class="side-nav" id="mobile-nav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">相由心生的博客</div>
+        <div class="logo-desc">
+            
+            程序猿.算法爱好者.
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                Index
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                Tags
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                Categories
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                Archives
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                About
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                Friends
+            </a>
+        </li>
+        
+        <li>
+            <a href="https://hexo.io/themes/#Simple" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-street-view"></i>
+                
+                Themes
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/fuhongyu" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+
+    <div class="social-link"><a href="https://github.com/fuhongyu" class="tooltipped" target="_blank" data-tooltip="我的GitHub" data-position="top" data-delay="50">
+    <i class="fa fa-github"></i>
+</a>
+<a href="mailto:15634408337@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+    <i class="fa fa-envelope-open"></i>
+</a>
+<a href="#!" class="tooltipped" data-tooltip="QQ联系我:1378844851" data-position="top" data-delay="50">
+    <i class="fa fa-qq"></i>
+</a>
+<a href="https://www.nowcoder.com/profile/93389833" class="tooltipped" data-tooltip="牛客网" data-position="top" data-delay="50">
+    <i class="fa fa-resistance"></i>
+</a>
+<a href="https://me.csdn.net/fhy569039351" class="tooltipped" data-tooltip="我的csdn" data-position="top" data-delay="50">
+    <i class="fa fa-lastfm"></i>
+</a>
+<a href="https://leetcode-cn.com/problemset/all/" class="tooltipped" data-tooltip="领扣中国" data-position="top" data-delay="50">
+    <i class="fa fa-users"></i>
+</a>
+</div>
+</div>
+
+            </div>
+        </div>
+
+        
+        <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/fuhongyu" class="github-corner tooltipped hide-on-med-and-down" target="_blank" data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewbox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/>
+    </svg>
+</a>
+        
+    </nav>
+</header>
+
+
+
+
+
+<div class="bg-cover post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        java高并发程序设计知识总结
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="container content">
+
+    
+    <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            
+            <div class="post-info">
+                
+
+                <span class="post-date">
+                    <i class="fa fa-clock-o fa-fw"></i>2018-12-23
+                </span>
+            </div>
+        </div>
+        <hr>
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><p>最近把《实战java高并发程序设计》一书看了两遍，很多知识不加积累很快就忘记了，在此对java高并发这块知识进行总结，一方面自己回顾方法，另一方面可以给大家提供方便。</p>
+<ul>
+<li><h4 id="线程的母亲——进程"><a href="#线程的母亲——进程" class="headerlink" title="线程的母亲——进程"></a>线程的母亲——进程</h4><ul>
+<li>进程（Process）是计算机中的程序关于某数据集合上的一次运行活动，是系统进行资源分配和调度的基本单位，是操作系统结构的基础。</li>
+</ul>
+</li>
+<li><h4 id="几个重要概念"><a href="#几个重要概念" class="headerlink" title="几个重要概念"></a>几个重要概念</h4><ul>
+<li>同步（Synchronous）和异步(Asynchronous)：同步和异步通常用来形容一次方法调用。同步方法调用一旦开始，调用者必须等到方法调用返回后，才能继续后续的行为。异步方法调用更像是一个消息传递，一旦开始，方法调用就会立即返回，调用者就可以继续后续的工作。</li>
+<li>并发(Concurrency)和并行(Parallelism)：并发偏重于多个任务交替执行，而多个任务之间有可能还是串行的。而并行是真正意义上的“同时执行”。</li>
+<li>临界区：用来表示一种公共资源或者说是共享数据，可以被多个线程使用，但是每一次，只能有一个线程使用它，一旦临界区资源被占用，其他线程要想使用这个资源，就必须等待。在并行程序中，临界区资源是保护的对象。</li>
+<li>阻塞（Blocking）和非阻塞(Non-Blocking)：他们用来形容多线程间的相互影响。如一个线程占用了临界区资源，那么其他所有需要这个资源的线程都必须等待，导致线程挂起，即阻塞。资源不释放，所有阻塞在临界区上的线程都不能工作。非阻塞与之相反，它指没有一个线程可以妨碍其他线程的执行。</li>
+<li>死锁（DeadLock）：多个线程彼此占用了其他线程所需要的资源，得不到需要的资源，又不释放已得到的资源。</li>
+<li>饥饿（Starvation）：指某一个或多个线程因为种种原因无法获得所需要的资源，导致一直无法执行。（如线程的优先级太低）还有一种情况，某一个线程一直占着资源不释放，导致其他需要这个资源的线程无法正常执行，与死锁相比，饥饿是有可能在未来一段时间内解决的。</li>
+<li>活锁（LiveLock）：两个线程间，秉承“谦让”的原则，主动将资源释放给他人使用，可能会出现资源在两个线程中跳动，没有一个线程可以同时拿到所有资源而正常执行。</li>
+</ul>
+</li>
+<li><h4 id="并发级别"><a href="#并发级别" class="headerlink" title="并发级别"></a>并发级别</h4><ul>
+<li>阻塞（Blocking）：一个线程是阻塞的，那么在其他线程释放资源之前，当前线程无法继续执行。使用synchronized关键字和ReentrantLock（重入锁）得到的就是阻塞线程。阻塞的控制方式是悲观策略。</li>
+<li>无饥饿（Starvation-Free）：如果锁是公平的，满足先来后到，那饥饿就不会产生。</li>
+<li>无障碍（Obstruction-Free）：无障碍是一种最弱的非阻塞调度。两个线程是无障碍地执行，那它们不会因为临界区的问题导致一方挂起，大家都可以大摇大摆地进入临界区。如果两个线程一起修改数据导致数据改坏了，则进行回滚， 保证数据安全。若没有数据竞争，则线程顺利完成工作，走出临界区。非阻塞的调度是一种乐观的策略。一种可行的无障碍实现可以依赖一个“一致性标记”来实现。</li>
+<li>无锁（Lock-Free）：无锁的并行都是无障碍的。无锁的并发保证必然有一个线程能够在有限步内完成操作离开临界区。如CAS操作。</li>
+<li>无等待（Wait-Free）：它要求所有线程都必须在有限步内完成，这样就不会引起饥饿问题。</li>
+</ul>
+</li>
+<li><h4 id="为什么要使用并行"><a href="#为什么要使用并行" class="headerlink" title="为什么要使用并行"></a>为什么要使用并行</h4><ul>
+<li>为了获得更好的性能。</li>
+<li>由于业务模型的需要，确实需要多个执行实体。</li>
+</ul>
+</li>
+<li><h4 id="有关并行的两个重要定律"><a href="#有关并行的两个重要定律" class="headerlink" title="有关并行的两个重要定律"></a>有关并行的两个重要定律</h4><ul>
+<li>Amdahl定律：加速比定义：加速比=优化前系统耗时/优化后系统耗时。 Amdahl定律强调，当串行比例一定时，加速比是有上限的，不管你堆叠多少CPU参与计算，都不能突破这个上限！</li>
+<li>Gustafson定律：其关心的是：如果可被并行化的代码所占比重足够多，那么加速比就可以随着CPU的数量线性增长。</li>
+</ul>
+</li>
+<li><h4 id="java内存模型（JMM）"><a href="#java内存模型（JMM）" class="headerlink" title="java内存模型（JMM）"></a>java内存模型（JMM）</h4><ul>
+<li>原子性（Atomicity）: 原子性指一个操作是不可中断的。即使是在多个线程一起执行的时候，一个操作一旦开始，就不会被其他线程干扰。对于32系统来说，Long类型的数据的读写不是原子性的（long有64位）。</li>
+<li>可见性（Visibility）: 可见性是指当一个线程修改了某一个共享变量，其他线程是否能够立即知道这个修改。</li>
+<li>有序性（Ordering）：单线程环境下，指令从前往后执行；多线程环境下，可能会进行指令重排，重排后的指令与原指令顺序未必一致。指令重排可以保证串行语义一致，但是没有义务保证多线程间的语义也一致。</li>
+</ul>
+</li>
+<li><h4 id="Happen-Before原则"><a href="#Happen-Before原则" class="headerlink" title="Happen-Before原则"></a>Happen-Before原则</h4><ul>
+<li>程序顺序原则：一个线程内保证语义的串行性</li>
+<li>volatile规则：volatile变量的写，先发生于读，这保证了volatile变量的可见性。</li>
+<li>锁规则：解锁必然发生在随后的加锁前。</li>
+<li>传递性：A先于B，B先于C，那么A必然先于C</li>
+<li>线程的start()方法先于它的每一个动作</li>
+<li>线程的所有操作先于线程的终结（Thread.join()）</li>
+<li>线程的中断（interrupt（））先于被中断线程的代码</li>
+<li>对象的构造函数执行、结束先于finalize()方法</li>
+</ul>
+</li>
+<li><h3 id="java并行程序基础"><a href="#java并行程序基础" class="headerlink" title="java并行程序基础"></a>java并行程序基础</h3><ul>
+<li><h4 id="线程状态转换："><a href="#线程状态转换：" class="headerlink" title="线程状态转换："></a>线程状态转换：</h4><p><img src="https://img.mubu.com/document_image/e1375cab-d57b-44a2-9a35-aed41db90124-2160256.jpg" alt="img"></p>
+<ul>
+<li>新建（New）：创建后尚未启动。</li>
+<li>可运行（Runnable）：可能正在运行，也可能正在等待 CPU 时间片。包含了操作系统线程状态中的 Running 和 Ready。</li>
+<li>阻塞（Blocking）: 等待获取一个排它锁，如果其线程释放了锁就会结束此状态。</li>
+<li>无限期等待（Waiting）：等待其它线程显式地唤醒，否则不会被分配 CPU 时间片。</li>
+<li>限期等待（Timed Waiting）无需等待其它线程显式地唤醒，在一定时间之后会被系统自动唤醒。调用 Thread.sleep() 方法使线程进入限期等待状态时，常常用“使一个线程睡眠”进行描述。调用 Object.wait() 方法使线程进入限期等待或者无限期等待时，常常用“挂起一个线程”进行描述。</li>
+<li>死亡（Terminated）：可以是线程结束任务之后自己结束，或者产生了异常而结束。</li>
+</ul>
+</li>
+<li><h4 id="新建线程"><a href="#新建线程" class="headerlink" title="新建线程"></a>新建线程</h4><ul>
+<li>实现Runnable接口</li>
+<li>实现Callable接口</li>
+<li>继承Thread类</li>
+<li>说明：实现 Runnable 和 Callable 接口的类只能当做一个可以在线程中运行的任务，不是真正意义上的线程，因此最后还需要通过 Thread 来调用。可以说任务是通过线程驱动从而执行的。</li>
+<li>三种实现方式的比较：<ul>
+<li>实现Runnable接口可以避免Java单继承特性而带来的局限；增强程序的健壮性，代码能够被多个线程共享，代码与数据是独立的；适合多个相同程序代码的线程区处理同一资源的情况。</li>
+<li>继承Thread类和实现Runnable方法启动线程都是使用start方法，然后JVM虚拟机将此线程放到就绪队列中，如果有处理机可用，则执行run方法。</li>
+<li>实现Callable接又要实现call方法，并且线程执行完毕后会有返回值。其他的两种都是重写run方法，没有返回值。</li>
+<li>实现接口会更好一些，因为：①Java 不支持多重继承，因此继承了 Thread 类就无法继承其它类，但是可以实现多个接口；②类可能只要求可执行就行，继承整个 Thread 类开销过大。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h4 id="终止线程"><a href="#终止线程" class="headerlink" title="终止线程"></a>终止线程</h4><ul>
+<li>Thread.stop()方法在结束线程时，会直接终止线程，并且会立即释放这个线程所持有的锁。若此时线程写入数据写到一半，并强行终止，那么对象就会被写坏，另一个线程读到不一致的对象。所以，不建议使用Thread.stop() 来终止线程</li>
+<li>解决：可以定义一个标记变量 stopme, 用于指示线程是否需要退出，当调用线程终止方法（stopMe()）,stopme被设置为true,单线程执行到此，检测到改动，自然退出，不会使对象的状态出现错误。</li>
+</ul>
+</li>
+<li><h4 id="线程中断"><a href="#线程中断" class="headerlink" title="线程中断"></a>线程中断</h4><ul>
+<li>Thread.interrupt() : 是实例方法，通知目标线程中断，即设置中断标志位。</li>
+<li>Thread.isInterrupted() ：是实例方法，判断当前线程是否有被中断。</li>
+<li>Thread.interrupted() ：静态方法，判断当前线程的中断状态，但同时会清除当前线程的中断标志位状态</li>
+</ul>
+</li>
+<li><h4 id="等待（wait）和通知（notify）"><a href="#等待（wait）和通知（notify）" class="headerlink" title="等待（wait）和通知（notify）"></a>等待（wait）和通知（notify）</h4><ul>
+<li>object.wait()：如果一个线程调用了object.wait()，那么它就会进入object 对象的等待队列，这个等待队列，可能会有多个线程同时等待某一个对象。</li>
+<li>object.notify()：如果object.notify()被调用时，它就会从这个等待队列中，随机选择一个线程，并将其唤醒。（注意：这个选择是不公平，随机的）</li>
+<li>说明：object.wait()不能随便调用，它必须包含在对应的synchronized语句中，无论是wait()或者notify()都需要首先获得目标对象的一个监视器</li>
+<li>object.wait()和Thread.sleep() : 两个方法都可以让线程等待若干时间，除了wait()可以被唤醒外，另外一个主要的区别就是wait()方法会释放目标对象的锁，Tread.sleep()方法不会释放任何资源。</li>
+</ul>
+</li>
+<li><h4 id="挂起（suspend）和继续执行（resume）线程"><a href="#挂起（suspend）和继续执行（resume）线程" class="headerlink" title="挂起（suspend）和继续执行（resume）线程"></a>挂起（suspend）和继续执行（resume）线程</h4><ul>
+<li>suspend在导致线程暂停的同时，并不会去释放任何锁资源。此时，其他线程想要访问被它暂用的锁时，都会被牵连，导致无法正常继续运行。直到对应的线程上进行了resume()操作，被挂起的线程才能继续，从而其他所有阻塞在相关锁上的线程也可以继续执行。所以不推荐使用suspend()去挂起线程</li>
+<li>另外，如果resume()操作意外地在suspend()前就释放了，那么挂起的线程可能很难有机会继续执行。并且，更严重的是，它所占用的锁不会释放，因此可能导致整个系统工作不正常。（被挂起的线程，处于Runnable状态，让我们没办法对系统当前状态进行判断呀）</li>
+</ul>
+</li>
+<li><h4 id="等待线程结束（join）和谦让（yield）"><a href="#等待线程结束（join）和谦让（yield）" class="headerlink" title="等待线程结束（join）和谦让（yield）"></a>等待线程结束（join）和谦让（yield）</h4><ul>
+<li>join() 表示无限时等待，它会一直阻塞当前线程，直到目标线程执行完毕。join()的本质是让调用线程wait()在当前线程对象实例上。（调用线程等待当前线程）</li>
+<li>join(long millis) 给出最大等待时间，如果超过给定时间目标线程还在执行，当前线程也会因“等不及了”，而继续往下执行。</li>
+<li>Thread.yield()：是一个静态方法，一旦执行，会使当前线程让出CPU。但要注意，让出CPU并不表示当前线程不执行了，当前线程在让出CPU后，还会进行CPU资源的争夺，但能否再次分配到就不一定了。</li>
+</ul>
+</li>
+<li><h4 id="volatile关键字"><a href="#volatile关键字" class="headerlink" title="volatile关键字"></a>volatile关键字</h4><ul>
+<li>当用volatile去声明一个变量的时候，就等于告诉了虚拟机，这个变量极有可能会被某些程序或者线程修改。</li>
+<li>volatile能保证数据的可见性和有序性，不能保证原子性。</li>
+</ul>
+</li>
+<li><h4 id="线程组"><a href="#线程组" class="headerlink" title="线程组"></a>线程组</h4><ul>
+<li>ThreadGroup tg = new ThreadGroup(“ThreadGroup name”); 在创建线程和线程组的时候，给他们取一个好听的名字。</li>
+</ul>
+</li>
+<li><h4 id="守护线程"><a href="#守护线程" class="headerlink" title="守护线程"></a>守护线程</h4><ul>
+<li>守护线程是一种特殊的线程，就和它的名字一样，它是系统的守护者，在后台默默地完成一些系统性的服务，比如垃圾回收线程，JIT线程可以理解为守护线程。</li>
+<li>当一个java应用内，只有守护线程时，java虚拟机就会自然退出。</li>
+<li>t.setDaemon(true); 将一个线程设置为守护线程。</li>
+</ul>
+</li>
+<li><h4 id="线程优先级"><a href="#线程优先级" class="headerlink" title="线程优先级"></a>线程优先级</h4><ul>
+<li>在java中，使用1-10表示线程优先级，数字越大优先级越高</li>
+<li>public final static int MIN_PRIORITY = 1;</li>
+<li>public final static int NORM_PRIORITY = 5;</li>
+<li>public final static int MAX_PRIORITY = 10;</li>
+<li>thread.setPriority(Thread.MAX_PRIORITY ) // 为一个线程设置优先级</li>
+</ul>
+</li>
+<li><h4 id="synchronized-的加锁方式"><a href="#synchronized-的加锁方式" class="headerlink" title="synchronized 的加锁方式"></a>synchronized 的加锁方式</h4><ul>
+<li>同步一个代码块 ： 它只作用于同一个对象，如果调用两个对象上的同步代码块，就不会进行同步。</li>
+<li>同步一个方法 ： 它和同步代码块一样，作用于同一个对象。</li>
+<li>同步一个类： 作用于整个类，也就是说两个线程调用同一个类的不同对象上的这种同步语句，也会进行同步。</li>
+<li>同步一个静态方法： 作用于整个类。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h3 id="JDK并发包："><a href="#JDK并发包：" class="headerlink" title="JDK并发包："></a>JDK并发包：</h3><ul>
+<li><h4 id="同步控制："><a href="#同步控制：" class="headerlink" title="同步控制："></a>同步控制：</h4><ul>
+<li><h5 id="ReentrantLock（重入锁-）"><a href="#ReentrantLock（重入锁-）" class="headerlink" title="ReentrantLock（重入锁 ）"></a>ReentrantLock（重入锁 ）</h5><ul>
+<li>重入锁可以完全替代synchronized关键字，使用 java.util.concurrent.locks.ReentrantLock 类来实现。“重入”？：这种锁是可以反复进入的(这里的反复仅仅局限于一个线程),如果一个线程多次获得锁，那么在释放锁的时候，也必须释放相同次数的锁。</li>
+<li>Synchronized与ReentrantLock比较：<ul>
+<li>锁的实现：synchronized 是 JVM 实现的，而 ReentrantLock 是 JDK 实现的。</li>
+<li>性能：新版本 Java 对 synchronized 进行了很多优化，例如自旋锁等，synchronized 与 ReentrantLock 大致相同。</li>
+<li>等待可中断: 当持有锁的线程长期不释放锁的时候，正在等待的线程可以选择放弃等待，改为处理其他事情。ReentrantLock 可中断，而 synchronized 不行。</li>
+<li>公平锁：公平锁是指多个线程在等待同一个锁时，必须按照申请锁的时间顺序来依次获得锁。synchronized 中的锁是非公平的，ReentrantLock 默认情况下也是非公平的，但是也可以是公平的。</li>
+<li>锁绑定多个条件：一个 ReentrantLock 可以同时绑定多个 Condition 对象。</li>
+</ul>
+</li>
+<li>lock.lock() 和 lock.lockInterruptibly()的区别：<ul>
+<li>lock() 优先获得锁</li>
+<li>lockInterruptibly() 优先相应中断</li>
+</ul>
+</li>
+<li>锁申请等待限时 tryLock：<ul>
+<li>lock.tryLock(5, TimeUnit.SECONDS) 参数表示等待时常， 计时单位</li>
+<li>lock.tryLock(）不带参数时，申请锁成功立即返回true,申请失败，不会等待，立即返回false.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h5 id="Condition条件"><a href="#Condition条件" class="headerlink" title="Condition条件:"></a>Condition条件:</h5><ul>
+<li>ReentrantLock lock = new ReentrantLock(); Condition condition = lock.newCondition(); //新建一个与lock绑定的condition对象</li>
+<li>condition.await(); //让线程在Condition对象上等待，线程调用condition.await()时，要求线程持有相关的重入锁，在condition.await()调用之后，线程会释放这把锁</li>
+<li>condition.signal(); //唤醒线程，condition.signal()方法调用时，也要求线程先获得相关的锁，在signal()方法调用之后，系统会从当前condition对象的等待队列中，唤醒一个线程。</li>
+<li>ArrayBlockingQueue 的put()和take()方法使用的重入锁和Condition条件。</li>
+</ul>
+</li>
+<li><h5 id="信号量（Semaphore）"><a href="#信号量（Semaphore）" class="headerlink" title="信号量（Semaphore）:"></a>信号量（Semaphore）:</h5><ul>
+<li>信号量可以指定多个线程同时访问某个资源。</li>
+<li>Semaphore semp = new Semaphore(5); //构造信号量对象，必须指定信号量准入数。</li>
+<li>aquire() 方法尝试获得一个准入的许可。</li>
+<li>acquireUninterruptibly() 不响应中断。</li>
+<li>release() 用于在线程访问资源结束后，释放一个许可</li>
+</ul>
+</li>
+<li><h5 id="读写锁（ReadWriteLock）："><a href="#读写锁（ReadWriteLock）：" class="headerlink" title="读写锁（ReadWriteLock）："></a>读写锁（ReadWriteLock）：</h5><ul>
+<li>ReadWriteLock是jdk5中提供的读写分离锁，读写锁允许多个线程同时读，写写操作和读写操作间依然是需要相互等待和持有锁的。</li>
+<li>ReentrantReadWriteLock readWritelock = new ReentrantReadWriteLock(); Lock readLock = readWritelock .readLock(); Lock writeLock = readWritelock .writeLock();</li>
+</ul>
+</li>
+<li><h5 id="倒计时器-CountDownLatch"><a href="#倒计时器-CountDownLatch" class="headerlink" title="倒计时器(CountDownLatch):"></a>倒计时器(CountDownLatch):</h5><ul>
+<li>控制线程等待，让某一线程等待直到倒计时结束，再开始执行。</li>
+<li>CountDownLatch.countdown(); //通知CountDownLatch 一个线程已经完成，倒计时器可以减1了。</li>
+<li>CountDownLatch.await(); //主线等待所有任务全部完成再往下执行</li>
+</ul>
+</li>
+<li><h5 id="循环栅栏（CyclicBarrier）"><a href="#循环栅栏（CyclicBarrier）" class="headerlink" title="循环栅栏（CyclicBarrier）:"></a>循环栅栏（CyclicBarrier）:</h5><ul>
+<li>和CountDownLatch非常类似，但功能更加复杂且强大</li>
+</ul>
+</li>
+<li><h5 id="线程阻塞工具类（LockSupport）"><a href="#线程阻塞工具类（LockSupport）" class="headerlink" title="线程阻塞工具类（LockSupport）:"></a>线程阻塞工具类（LockSupport）:</h5><ul>
+<li>它可以在线程内任意位置让线程阻塞，和Thread.suspend()相比，它弥补了由于resume() 在前发生，导致线程无法继续执行的情况。</li>
+<li>LockSupport.park()；//挂起线程 LockSupport.unpark() //让线程继续执行。</li>
+<li>LockSupport 类使用类似信号量的机制，它为每一个线程准备了一个许可，如果许可可用，那么park()函数会立即返回，并且消费这个许可（即将许可变为不可用），如果许可不可用，就会阻塞，而unpark()则是使一个许可变为可用（但是和信号量不同的是，许可不能累加，你不可能拥有超过一个许可，他永远只有一个）。即使unpack() 操作发生在pack() 之前，它也可以使下一次的park() 操作立即返回。</li>
+<li>park() 挂起状态的线程，会非常明确地给出一个WAITING状态，甚至还会标注是park() 引起的。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h4 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h4></li>
+<li><h4 id="JDK的并发容器"><a href="#JDK的并发容器" class="headerlink" title="JDK的并发容器"></a>JDK的并发容器</h4><ul>
+<li><p>ConcurrentHashMap：位于java.util.concurrent 包内，是线程安全的HashMap</p>
+</li>
+<li><p>CopyOnWriteArrayList:</p>
+</li>
+<li><p>ConcurrentLinkedQueue:</p>
+</li>
+<li><p>BlockingQueue:</p>
+</li>
+<li><h3 id="ConcurrentSkipListMap"><a href="#ConcurrentSkipListMap" class="headerlink" title="ConcurrentSkipListMap:"></a>ConcurrentSkipListMap:</h3></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <hr>
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff;
+        background-color: #22AB38;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff;
+        background-color: #019FE8;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a class="reward-link btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs">
+                        <li class="tab wechat-tab waves-effect waves-light"><a class="active" href="#wechat">微信</a></li>
+                        <li class="tab alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                    </ul>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('#reward .reward-link').on('click', function () {
+            $('#rewardModal').openModal();
+        });
+
+        $('#rewardModal .close').on('click', function () {
+            $('#rewardModal').closeModal();
+        });
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            <div class="reprint">
+                <p>
+                    <span class="reprint-tip">转载请注明: </span>
+                    <a href="http://yoursite.com" class="b-link-green">相由心生的博客</a>
+                    <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
+                    <a href="/2018/12/23/java高并发程序设计知识总结/" class="b-link-green">java高并发程序设计知识总结</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: '',
+        owner: '',
+        admin: null,
+        id: '2018-12-23T10-15-27',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">上一篇</div>
+            <div class="card">
+                <a href="/2018/12/23/hello-world/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="Hello World">
+                        
+                        <span class="card-title">Hello World</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary">Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex</div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2018-12-23
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-user fa-fw"></i>
+                            付红玉
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">下一篇</div>
+            <div class="card">
+                <a href="/2018/12/21/剑指Offer-题48 ：最长不含重复字符的子字符串/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="剑指Offer-48 ：最长不含重复字符的子字符串">
+                        
+                        <span class="card-title">剑指Offer-48 ：最长不含重复字符的子字符串</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary">题目：最长不含重复字符的子字符串​      请从字符串中找出一个最长的不包含重复字符的子字符串，计算该最长子字符串的长度。假设字符串中只包含从’a’到’z’的字符。例如，在字符串中”arabcacfr”，最长非重复子字符串为”acfr”，</div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-12-21
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-user fa-fw"></i>
+                            付红玉
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+    
+
+</main>
+
+
+<footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            本站由&copy;<a href="https://blinkfox.github.io/" target="_blank">Blinkfox</a>基于
+            <a href="https://hexo.io/" target="_blank">Hexo</a> 采用
+            <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">hexo-theme-matery</a>的主题搭建.
+        </div>
+        <div class="col s12 m4 l4 social-link"><a href="https://github.com/fuhongyu" class="tooltipped" target="_blank" data-tooltip="我的GitHub" data-position="top" data-delay="50">
+    <i class="fa fa-github"></i>
+</a>
+<a href="mailto:15634408337@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+    <i class="fa fa-envelope-open"></i>
+</a>
+<a href="#!" class="tooltipped" data-tooltip="QQ联系我:1378844851" data-position="top" data-delay="50">
+    <i class="fa fa-qq"></i>
+</a>
+<a href="https://www.nowcoder.com/profile/93389833" class="tooltipped" data-tooltip="牛客网" data-position="top" data-delay="50">
+    <i class="fa fa-resistance"></i>
+</a>
+<a href="https://me.csdn.net/fhy569039351" class="tooltipped" data-tooltip="我的csdn" data-position="top" data-delay="50">
+    <i class="fa fa-lastfm"></i>
+</a>
+<a href="https://leetcode-cn.com/problemset/all/" class="tooltipped" data-tooltip="领扣中国" data-position="top" data-delay="50">
+    <i class="fa fa-users"></i>
+</a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+<!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title">搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字" class="search-input" autofocus>
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+</script>
+<!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+<script src="/libs/materialize/js/materialize.min.js"></script>
+<script src="/libs/masonry/masonry.pkgd.min.js"></script>
+<script src="/libs/aos/aos.js"></script>
+<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+<script src="/js/matery.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+</body>
+</html>
