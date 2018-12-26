@@ -6,7 +6,7 @@
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
     <meta name="keywords" content="java高并发程序设计知识总结, 相由心生的博客">
-    <meta name="description" content="基础概念最近把《实战java高并发程序设计》一书看了两遍，很多知识不加积累很快就忘记了，在此对java高并发这块知识进行总结，一方面自己回顾方法，另一方面可以给大家提供方便。
+    <meta name="description" content="基础概念最近把《实战java高并发程序设计》一书看了两遍，很多知识不加积累很快就忘记了，在此对java高并发这块知识进行总结，一方面自己回顾方便，另一方面可以给大家提供方便。
 
 线程的母亲——进程
 进程（Process）是计算机中的程序关于">
@@ -295,7 +295,7 @@
 
 
 
-<div class="bg-cover post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -319,7 +319,24 @@
     <div class="card">
         <div class="card-content article-info">
             
+            <div class="article-tag">
+                
+                <a href="/tags/java高并发/" target="_blank">
+                    <span class="chip bg-color">java高并发</span>
+                </a>
+                
+            </div>
+            
             <div class="post-info">
+                
+                <span class="post-cate">
+                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                    
+                    <a href="/categories/java高并发/" class="post-category" target="_blank">
+                        java高并发
+                    </a>
+                    
+                </span>
                 
 
                 <span class="post-date">
@@ -330,7 +347,7 @@
         <hr>
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><p>最近把《实战java高并发程序设计》一书看了两遍，很多知识不加积累很快就忘记了，在此对java高并发这块知识进行总结，一方面自己回顾方法，另一方面可以给大家提供方便。</p>
+                <h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><p>最近把《实战java高并发程序设计》一书看了两遍，很多知识不加积累很快就忘记了，在此对java高并发这块知识进行总结，一方面自己回顾方便，另一方面可以给大家提供方便。</p>
 <ul>
 <li><h4 id="线程的母亲——进程"><a href="#线程的母亲——进程" class="headerlink" title="线程的母亲——进程"></a>线程的母亲——进程</h4><ul>
 <li>进程（Process）是计算机中的程序关于某数据集合上的一次运行活动，是系统进行资源分配和调度的基本单位，是操作系统结构的基础。</li>
@@ -499,11 +516,17 @@
 </ul>
 </li>
 <li><h5 id="信号量（Semaphore）"><a href="#信号量（Semaphore）" class="headerlink" title="信号量（Semaphore）:"></a>信号量（Semaphore）:</h5><ul>
-<li>信号量可以指定多个线程同时访问某个资源。</li>
-<li>Semaphore semp = new Semaphore(5); //构造信号量对象，必须指定信号量准入数。</li>
-<li>aquire() 方法尝试获得一个准入的许可。</li>
-<li>acquireUninterruptibly() 不响应中断。</li>
-<li>release() 用于在线程访问资源结束后，释放一个许可</li>
+<li><p>信号量可以指定多个线程同时访问某个资源。</p>
+</li>
+<li><p>Semaphore semp = new Semaphore(5); //构造信号量对象，必须指定信号量准入数。</p>
+</li>
+<li><p>aquire() 方法尝试获得一个准入的许可。</p>
+</li>
+<li><p>acquireUninterruptibly() 不响应中断。</p>
+</li>
+<li><p>release() 用于在线程访问资源结束后，释放一个许可</p>
+<p><img src="https://cyc2018.gitbooks.io/interview-notebook/content/pics/Semaphore.png" alt="img"></p>
+</li>
 </ul>
 </li>
 <li><h5 id="读写锁（ReadWriteLock）："><a href="#读写锁（ReadWriteLock）：" class="headerlink" title="读写锁（ReadWriteLock）："></a>读写锁（ReadWriteLock）：</h5><ul>
@@ -514,11 +537,13 @@
 <li><h5 id="倒计时器-CountDownLatch"><a href="#倒计时器-CountDownLatch" class="headerlink" title="倒计时器(CountDownLatch):"></a>倒计时器(CountDownLatch):</h5><ul>
 <li>控制线程等待，让某一线程等待直到倒计时结束，再开始执行。</li>
 <li>CountDownLatch.countdown(); //通知CountDownLatch 一个线程已经完成，倒计时器可以减1了。</li>
-<li>CountDownLatch.await(); //主线等待所有任务全部完成再往下执行</li>
+<li>CountDownLatch.await(); //主线等待所有任务全部完成再往下执行 </li>
+<li><img src="https://cyc2018.gitbooks.io/interview-notebook/content/pics/CountdownLatch.png" alt="img"></li>
 </ul>
 </li>
 <li><h5 id="循环栅栏（CyclicBarrier）"><a href="#循环栅栏（CyclicBarrier）" class="headerlink" title="循环栅栏（CyclicBarrier）:"></a>循环栅栏（CyclicBarrier）:</h5><ul>
 <li>和CountDownLatch非常类似，但功能更加复杂且强大</li>
+<li><img src="https://cyc2018.gitbooks.io/interview-notebook/content/pics/CyclicBarrier.png" alt="img"></li>
 </ul>
 </li>
 <li><h5 id="线程阻塞工具类（LockSupport）"><a href="#线程阻塞工具类（LockSupport）" class="headerlink" title="线程阻塞工具类（LockSupport）:"></a>线程阻塞工具类（LockSupport）:</h5><ul>
@@ -530,22 +555,129 @@
 </li>
 </ul>
 </li>
-<li><h4 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h4></li>
-<li><h4 id="JDK的并发容器"><a href="#JDK的并发容器" class="headerlink" title="JDK的并发容器"></a>JDK的并发容器</h4><ul>
+<li><h4 id="线程池（Executor）"><a href="#线程池（Executor）" class="headerlink" title="线程池（Executor）"></a>线程池（Executor）</h4><p>为了避免系统频繁地创建和销毁线程，我们可以让创建的线程进行复用。需要使用线程时，从线程池中随便拿一个空闲线程，完成工作后，并不着急关闭线程，而是将这个线程退回到线程池。</p>
+<ul>
+<li><p>Executor （线程池）：进行线程控制，管理多个异步任务的执行，而无需程序员显式地管理线程的生命周期。这里的异步是指多个任务的执行互不干扰，不需要进行同步操作。</p>
+</li>
+<li><p>调用 Executor 的 shutdown() 方法会等待线程都执行完毕之后再关闭，但是如果调用的是 shutdownNow() 方法，则相当于调用每个线程的 interrupt() 方法。</p>
+<p>Executor框架提供了各种类型的线程池：</p>
+<ul>
+<li>newFixedThreadPool()方法：返回一个固定数量的线程池，该线程池中的线程数量始终不变</li>
+<li>newSingleThreadPool()方法：返回只有一个线程的线程池。（任务保存在任务队列）</li>
+<li>newCachedThreadPool()方法：该方法返回一个可根据实际情况调整线程数量的线程池（线程池数量不固定，但若有空闲线程可复用，会优先使用可以复用的线程。没有空闲则会创建显得线程处理任务。）</li>
+<li>newSingleThreadScheduledExecutor()方法：返回一个ScheduledExecutorService对象，线程池大小为1，功能：给定时间执行某任务。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h4 id="Fork-Join框架"><a href="#Fork-Join框架" class="headerlink" title="Fork/Join框架"></a>Fork/Join框架</h4><p>fork:创建子进程，使系统进程可以多一个执行分支</p>
+<p>join:表示等待</p>
+<p>fork/join例子如下：</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> concurrency<span class="token punctuation">.</span>demo<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>ExecutionException<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>ForkJoinPool<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>Future<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>RecursiveTask<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ForkJoinExample</span> <span class="token keyword">extends</span> <span class="token class-name">RecursiveTask</span><span class="token operator">&lt;</span>Integer<span class="token operator">></span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> threshold <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> first<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> last<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token function">ForkJoinExample</span><span class="token punctuation">(</span><span class="token keyword">int</span> first<span class="token punctuation">,</span> <span class="token keyword">int</span> last<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>first <span class="token operator">=</span> first<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>last <span class="token operator">=</span> last<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">protected</span> Integer <span class="token function">compute</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">int</span> result <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>last <span class="token operator">-</span> first <span class="token operator">&lt;=</span> threshold<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// 任务足够小则直接计算</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> first<span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> last<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                result <span class="token operator">+=</span> i<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// 拆分成小任务</span>
+            <span class="token keyword">int</span> middle <span class="token operator">=</span> first <span class="token operator">+</span> <span class="token punctuation">(</span>last <span class="token operator">-</span> first<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">;</span>
+            ForkJoinExample leftTask <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ForkJoinExample</span><span class="token punctuation">(</span>first<span class="token punctuation">,</span> middle<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            ForkJoinExample rightTask <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ForkJoinExample</span><span class="token punctuation">(</span>middle <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> last<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            leftTask<span class="token punctuation">.</span><span class="token function">fork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            rightTask<span class="token punctuation">.</span><span class="token function">fork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            result <span class="token operator">=</span> leftTask<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> rightTask<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> result<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> ExecutionException<span class="token punctuation">,</span> InterruptedException <span class="token punctuation">{</span>
+        ForkJoinExample example <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ForkJoinExample</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        ForkJoinPool forkJoinPool <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ForkJoinPool</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Future result <span class="token operator">=</span> forkJoinPool<span class="token punctuation">.</span><span class="token function">submit</span><span class="token punctuation">(</span>example<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>result<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+</code></pre>
+</li>
+<li><p>JDK的并发容器</p>
+<ul>
 <li><p>ConcurrentHashMap：位于java.util.concurrent 包内，是线程安全的HashMap</p>
+<p>线程安全的HashMap：Collections.synchronizedMap(new HashMap());</p>
+<p>线程安全的List：Collections.synchronizedList(new LinkedList<string>())</string></p>
 </li>
-<li><p>CopyOnWriteArrayList:</p>
+<li><p>CopyOnWriteArrayList：是一个List，在读多写少的场合，这个List的性能非常好，远远好于Vector</p>
+<p>性能极致？读取是完全不用加锁的，写入也不会阻塞读取操作，只有写入和写入之间需要进行同步等待。</p>
+<p>过程：当List需要修改时，并不修改原有的内容，而是对原有的数据<strong>进行一次复制</strong>，将修改的内容写入副本中。写完以后，再将修改完的副本替换原来的数据，这样保证写操作不会影响读。</p>
+<p>写入操作使用锁，这个锁仅限于控制写—写操作。</p>
 </li>
-<li><p>ConcurrentLinkedQueue:</p>
+<li><p>ConcurrentLinkedQueue：高效的并发队列，使用链表实现，可以看做是一个线程安全的LinkedList.算是高并发环境中性能最好的队列。  </p>
+<p>使用CAS来执行执行向队列中添加元素 offer()，弹出元素 poll()</p>
 </li>
-<li><p>BlockingQueue:</p>
+<li><p>BlockingQueue：是一个接口，适合于用作数据共享的通道</p>
+<ul>
+<li><p>ArrayBlockingQueue：基于数组实现，适合作有界队列</p>
 </li>
-<li><h3 id="ConcurrentSkipListMap"><a href="#ConcurrentSkipListMap" class="headerlink" title="ConcurrentSkipListMap:"></a>ConcurrentSkipListMap:</h3></li>
+<li><p>LinkedBlockingQueue：基于链表实现，适合作无界队列或者边界值很大的队列。</p>
+<p>操作：</p>
+<p>往队列插入元素：offer()，  put() 会等待</p>
+<p>从队列弹出元素：poll()  ， take() 会等待</p>
+<p><strong>put()和take() 方法才是体现Blocking的关键。</strong></p>
+</li>
+</ul>
+</li>
+<li><p>ConcurrentSkipListMap：跳表的实现</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h3 id="锁的优化"><a href="#锁的优化" class="headerlink" title="锁的优化"></a>锁的优化</h3><ul>
+<li><p>提高锁性能的几点建议：</p>
+<ul>
+<li><p>减小锁持有的时间</p>
+</li>
+<li><p>减小锁粒度：如ConcurrentHashMap 内部细分为Segment，加锁是对Segment加锁。</p>
+<p>求Map.size() 并不是直接取得全局锁，进行求和。而是先使用无锁的方式求和，如果失败才会尝试使用获得全局锁的方式进行计算</p>
+</li>
+<li><p>读写分离锁来替换独占锁：如 读写锁 ：ReadWriteLock</p>
+</li>
+<li><p>锁分离：如 LinkedBolckingQueue的实现，take()函数和put()函数分别作用于队列的前端和尾端。</p>
+<p>通过takeLock 和putLock 两把锁，LinkedBolckingQueue实现了取数据和写数据的分离，使两者在真正意义上成为可并发的操作.</p>
+</li>
+<li><p>锁粗化：虚拟机在遇到一连串连续地对同一锁不断进行请求和释放操作时，便会把所有锁操作整合成对锁的一次请求，从而减少对锁的请求同步次数。</p>
+</li>
+</ul>
+</li>
+<li><p>虚拟机对锁优化所做的努力：</p>
+<ul>
+<li></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
+<p>  #### </p>
 
             </div>
             <hr>
@@ -730,28 +862,43 @@
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">上一篇</div>
             <div class="card">
-                <a href="/2018/12/23/hello-world/">
+                <a href="/2018/12/23/JVM知识点梳理/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="Hello World">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="JVM知识点梳理">
                         
-                        <span class="card-title">Hello World</span>
+                        <span class="card-title">JVM知识点梳理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
-                    <div class="summary">Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex</div>
+                    <div class="summary">我复习java虚拟机用的是 周志明老师的《深入理解java虚拟机》这本书，同时结合极客时间上 郑雨迪老师讲的《深入拆解java虚拟机》。将重点知识在此进行梳理，方便日后回顾复习。
+本文部分图片和内容来源于CyC2018博客
+
+java内存模</div>
                     <div class="publish-info">
                         <span class="publish-date">
                             <i class="fa fa-clock-o fa-fw icon-date"></i>2018-12-23
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fa fa-user fa-fw"></i>
-                            付红玉
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/jvm/" class="post-category" target="_blank">
+                                    jvm
+                                </a>
+                            
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/JVM/" target="_blank">
+                        <span class="chip bg-color">JVM</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -765,7 +912,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="剑指Offer-48 ：最长不含重复字符的子字符串">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="剑指Offer-48 ：最长不含重复字符的子字符串">
                         
                         <span class="card-title">剑指Offer-48 ：最长不含重复字符的子字符串</span>
                     </div>
@@ -778,11 +925,23 @@
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fa fa-user fa-fw"></i>
-                            付红玉
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/剑指offer/" class="post-category" target="_blank">
+                                    剑指offer
+                                </a>
+                            
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/剑指offer/" target="_blank">
+                        <span class="chip bg-color">剑指offer</span>
+                    </a>
+                    
                 </div>
                 
             </div>

@@ -5,13 +5,8 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="常用画图工具推荐, 相由心生的博客">
-    <meta name="description" content="平时学习的很多知识点，需要画图才能加强记忆，通过咨询大佬，总结几款比较好用的画图软件，希望能给大家提供些帮助。
-1、lucidchart
-2、draw.io
-3、processon
-4、sketch
-5、画草图: https://www.a">
+    <meta name="keywords" content="面试题：用wait-notify 写一段代码来解决生产者-消费者问题, 相由心生的博客">
+    <meta name="description" content="java使用 wait和notify实现生产者消费者模型​       在多线程开发中，最经典的一个模型就是生产者消费者模型，他们有一个缓冲区，缓冲区有最大限制，当缓冲区满的时候，生产者是不能将产品放入到缓冲区里面的，当然，当缓冲区是空的时">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +14,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>常用画图工具推荐 | 相由心生的博客</title>
+    <title>面试题：用wait-notify 写一段代码来解决生产者-消费者问题 | 相由心生的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -297,13 +292,13 @@
 
 
 
-<div class="bg-cover post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
+<div class="bg-cover post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        常用画图工具推荐
+                        面试题：用wait-notify 写一段代码来解决生产者-消费者问题
                     </div>
                 </div>
             </div>
@@ -323,8 +318,8 @@
             
             <div class="article-tag">
                 
-                <a href="/tags/工具/" target="_blank">
-                    <span class="chip bg-color">工具</span>
+                <a href="/tags/java面试题/" target="_blank">
+                    <span class="chip bg-color">java面试题</span>
                 </a>
                 
             </div>
@@ -334,27 +329,118 @@
                 <span class="post-cate">
                     <i class="fa fa-bookmark fa-fw icon-category"></i>
                     
-                    <a href="/categories/工具/" class="post-category" target="_blank">
-                        工具
+                    <a href="/categories/java面试题/" class="post-category" target="_blank">
+                        java面试题
                     </a>
                     
                 </span>
                 
 
                 <span class="post-date">
-                    <i class="fa fa-clock-o fa-fw"></i>2018-12-23
+                    <i class="fa fa-clock-o fa-fw"></i>2018-12-24
                 </span>
             </div>
         </div>
         <hr>
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>平时学习的很多知识点，需要画图才能加强记忆，通过咨询大佬，总结几款比较好用的画图软件，希望能给大家提供些帮助。</p>
-<p>1、lucidchart</p>
-<p>2、draw.io</p>
-<p>3、processon</p>
-<p>4、sketch</p>
-<p>5、画草图: <a href="https://www.autodraw.com/" target="_blank" rel="noopener">https://www.autodraw.com/</a></p>
+                <h3 id="java使用-wait和notify实现生产者消费者模型"><a href="#java使用-wait和notify实现生产者消费者模型" class="headerlink" title="java使用 wait和notify实现生产者消费者模型"></a>java使用 wait和notify实现生产者消费者模型</h3><p>​       在多线程开发中，最经典的一个模型就是<strong>生产者消费者模型</strong>，他们有一个缓冲区，缓冲区有最大限制，当缓冲区满的时候，生产者是不能将产品放入到缓冲区里面的，当然，当缓冲区是空的时候，消费者也不能从中拿出来产品，这就涉及到了在多线程中的条件判断。</p>
+<p>​    java为了实现这些功能，提供了<strong>wait和notify</strong>方法，他们可以在线程不满足要求的时候，让线程让出来资源等待（wait），当有资源的时候再唤醒(notify)他们让他们继续工作，下面我们用实际的代码（java）来展示如何使用wait和notify。</p>
+<h3 id="首先是缓冲区实现，我们用LinkedList-来实现"><a href="#首先是缓冲区实现，我们用LinkedList-来实现" class="headerlink" title="首先是缓冲区实现，我们用LinkedList 来实现"></a>首先是缓冲区实现，我们用LinkedList 来实现</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> concurrency<span class="token punctuation">.</span>demo<span class="token punctuation">.</span>waitAndNotify<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Date<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>LinkedList<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Storage</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> maxSize<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> LinkedList<span class="token operator">&lt;</span>Date<span class="token operator">></span> storage<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token function">Storage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        maxSize <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+        storage <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LinkedList</span><span class="token operator">&lt;</span>Date<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">//往缓冲区插入一个元素</span>
+    <span class="token keyword">public</span> <span class="token keyword">synchronized</span> <span class="token keyword">void</span> <span class="token function">set</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>storage<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> maxSize<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">try</span><span class="token punctuation">{</span>
+                <span class="token function">wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token keyword">catch</span><span class="token punctuation">(</span>InterruptedException e<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        storage<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Set:"</span><span class="token operator">+</span>storage<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">notifyAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">//从缓冲区取出一个元素</span>
+    <span class="token keyword">public</span> <span class="token keyword">synchronized</span> <span class="token keyword">void</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>storage<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">try</span><span class="token punctuation">{</span>
+                <span class="token function">wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token keyword">catch</span><span class="token punctuation">(</span>InterruptedException e<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Get: %d %s \n"</span><span class="token punctuation">,</span> storage<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> storage<span class="token punctuation">.</span><span class="token function">poll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">notifyAll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="生产者实现："><a href="#生产者实现：" class="headerlink" title="生产者实现："></a>生产者实现：</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> concurrency<span class="token punctuation">.</span>demo<span class="token punctuation">.</span>waitAndNotify<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Producer</span> <span class="token keyword">implements</span> <span class="token class-name">Runnable</span><span class="token punctuation">{</span>
+
+    Storage storage <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Storage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token function">Producer</span><span class="token punctuation">(</span>Storage storage<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>storage <span class="token operator">=</span> storage<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">100</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            storage<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="消费者实现："><a href="#消费者实现：" class="headerlink" title="消费者实现："></a>消费者实现：</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> concurrency<span class="token punctuation">.</span>demo<span class="token punctuation">.</span>waitAndNotify<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Consumer</span> <span class="token keyword">implements</span> <span class="token class-name">Runnable</span><span class="token punctuation">{</span>
+
+    Storage storage <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Storage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token function">Consumer</span><span class="token punctuation">(</span>Storage storage<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>storage <span class="token operator">=</span> storage<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">100</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            storage<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="main函数"><a href="#main函数" class="headerlink" title="main函数"></a>main函数</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> concurrency<span class="token punctuation">.</span>demo<span class="token punctuation">.</span>waitAndNotify2<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MainTest</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        Storage storage <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Storage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Producer producer <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Producer</span><span class="token punctuation">(</span>storage<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Thread t1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>producer<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        Consumer consumer <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Consumer</span><span class="token punctuation">(</span>storage<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Thread t2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>consumer<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        t2<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        t1<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
 
             </div>
             <hr>
@@ -493,7 +579,7 @@
                     <span class="reprint-tip">转载请注明: </span>
                     <a href="http://yoursite.com" class="b-link-green">相由心生的博客</a>
                     <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
-                    <a href="/2018/12/23/常用画图工具推荐/" class="b-link-green">常用画图工具推荐</a>
+                    <a href="/2018/12/24/用-wait-notify-写一段代码来解决生产者-消费者问题/" class="b-link-green">面试题：用wait-notify 写一段代码来解决生产者-消费者问题</a>
                 </p>
             </div>
         </div>
@@ -515,7 +601,7 @@
         repo: '',
         owner: '',
         admin: null,
-        id: '2018-12-23T21-01-05',
+        id: '2018-12-24T10-42-07',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -539,6 +625,49 @@
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">上一篇</div>
             <div class="card">
+                <a href="/2018/12/24/hello-world/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="Hello World">
+                        
+                        <span class="card-title">Hello World</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary">Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex</div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2018-12-24
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Hexo/" class="post-category" target="_blank">
+                                    Hexo
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Hexo/" target="_blank">
+                        <span class="chip bg-color">Hexo</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">下一篇</div>
+            <div class="card">
                 <a href="/2018/12/24/最近5年133个Java面试问题列表/">
                     <div class="card-image">
                         
@@ -552,9 +681,9 @@
                     <div class="summary">本文转自知乎：极乐科技
 Java 面试随着时间的改变而改变。在过去的日子里，当你知道 String 和 StringBuilder 的区别（String 类型和 StringBuffer 类型的主要性能区别其实在于 String 是不可变的</div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2018-12-24
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-12-24
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -572,52 +701,6 @@ Java 面试随着时间的改变而改变。在过去的日子里，当你知道
                     
                     <a href="/tags/java面试题/" target="_blank">
                         <span class="chip bg-color">java面试题</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">下一篇</div>
-            <div class="card">
-                <a href="/2018/12/23/JVM知识点梳理/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="JVM知识点梳理">
-                        
-                        <span class="card-title">JVM知识点梳理</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary">我复习java虚拟机用的是 周志明老师的《深入理解java虚拟机》这本书，同时结合极客时间上 郑雨迪老师讲的《深入拆解java虚拟机》。将重点知识在此进行梳理，方便日后回顾复习。
-本文部分图片和内容来源于CyC2018博客
-
-java内存模</div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-12-23
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/jvm/" class="post-category" target="_blank">
-                                    jvm
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/JVM/" target="_blank">
-                        <span class="chip bg-color">JVM</span>
                     </a>
                     
                 </div>

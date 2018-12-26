@@ -5,13 +5,10 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="常用画图工具推荐, 相由心生的博客">
-    <meta name="description" content="平时学习的很多知识点，需要画图才能加强记忆，通过咨询大佬，总结几款比较好用的画图软件，希望能给大家提供些帮助。
-1、lucidchart
-2、draw.io
-3、processon
-4、sketch
-5、画草图: https://www.a">
+    <meta name="keywords" content="剑指offer:数组中数字出现的次数, 相由心生的博客">
+    <meta name="description" content="题目描述一个整型数组里除了两个数字之外，其他的数字都出现了偶数次。请写出程序找出这个两个出现一次的数字，要求时间复杂度O(n)，空间复杂度O(1)。
+牛客网链接
+分析看到这个题目，我首先想到遍历数组，用HashMap存放每个数组出现的次数，">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +16,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>常用画图工具推荐 | 相由心生的博客</title>
+    <title>剑指offer:数组中数字出现的次数 | 相由心生的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -297,13 +294,13 @@
 
 
 
-<div class="bg-cover post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
+<div class="bg-cover post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        常用画图工具推荐
+                        剑指offer:数组中数字出现的次数
                     </div>
                 </div>
             </div>
@@ -323,38 +320,71 @@
             
             <div class="article-tag">
                 
-                <a href="/tags/工具/" target="_blank">
-                    <span class="chip bg-color">工具</span>
+                <a href="/tags/剑指offer/" target="_blank">
+                    <span class="chip bg-color">剑指offer</span>
                 </a>
                 
             </div>
             
             <div class="post-info">
                 
-                <span class="post-cate">
-                    <i class="fa fa-bookmark fa-fw icon-category"></i>
-                    
-                    <a href="/categories/工具/" class="post-category" target="_blank">
-                        工具
-                    </a>
-                    
-                </span>
-                
 
                 <span class="post-date">
-                    <i class="fa fa-clock-o fa-fw"></i>2018-12-23
+                    <i class="fa fa-clock-o fa-fw"></i>2018-12-26
                 </span>
             </div>
         </div>
         <hr>
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>平时学习的很多知识点，需要画图才能加强记忆，通过咨询大佬，总结几款比较好用的画图软件，希望能给大家提供些帮助。</p>
-<p>1、lucidchart</p>
-<p>2、draw.io</p>
-<p>3、processon</p>
-<p>4、sketch</p>
-<p>5、画草图: <a href="https://www.autodraw.com/" target="_blank" rel="noopener">https://www.autodraw.com/</a></p>
+                <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>一个整型数组里除了两个数字之外，其他的数字都出现了偶数次。请写出程序找出这个两个出现一次的数字，要求时间复杂度O(n)，空间复杂度O(1)。</p>
+<p><a href="https://www.nowcoder.com/practice/e02fdb54d7524710a7d664d082bb7811?tpId=13&amp;tqId=11193&amp;tPage=2&amp;rp=2&amp;ru=%2Fta%2Fcoding-interviews&amp;qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking" target="_blank" rel="noopener">牛客网链接</a></p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>看到这个题目，我首先想到遍历数组，用HashMap存放每个数组出现的次数，K为元素值，V为该元素出现的次数。并迅速用代码实现，并在牛客上通过了。</p>
+<p>但仔细一看，该题目并没有这么简单，要求时间复杂度O(n),使用HashMap能满足，但是空间复杂度要求O(1)，这个要求明显不满足，我们的是O(n).</p>
+<p>新的思路：基于以下技术点</p>
+<ol>
+<li>两个相同的数字的异或结果是0</li>
+<li>任意数字异或0结果还是该数字</li>
+<li>任意数字与1结果还是该数字</li>
+</ol>
+<p>我们将该数组中的数组进行异或，得到的结果是两个出现一次的数组异或的结果。因为其他数字都出现了两次，在异或中抵消了。这两个数字不同，所以异或结果不为0，也就是至少有一位是1。</p>
+<p>我们在结果数字中找到第一个为1的位的位置，记为第n位。</p>
+<p>现在我们以第n位是不是1为标准把原数组中的数组分成两个子数组，并分别进行异或操作，两个子数组异或的结果就是这两个出现一次的数。</p>
+<h3 id="代码实现（java）"><a href="#代码实现（java）" class="headerlink" title="代码实现（java）"></a>代码实现（java）</h3><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//num1,num2分别为长度为1的数组。传出参数</span>
+<span class="token comment" spellcheck="true">//将num1[0],num2[0]设置为返回结果</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">FindNumsAppearOnce</span><span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> array<span class="token punctuation">,</span><span class="token keyword">int</span> num1<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">,</span> <span class="token keyword">int</span> num2<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>array<span class="token punctuation">.</span>length <span class="token operator">&lt;</span> <span class="token number">2</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span> <span class="token punctuation">;</span>
+
+        <span class="token keyword">int</span> result <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> each <span class="token operator">:</span> array<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            result <span class="token operator">^=</span> each<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment" spellcheck="true">//找到异或结果中第一个为1的位的位置</span>
+        <span class="token keyword">int</span> index <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token punctuation">(</span>result<span class="token operator">&amp;</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            result <span class="token operator">=</span> result<span class="token operator">>></span><span class="token number">1</span><span class="token punctuation">;</span>
+            index<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        num1<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        num2<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> each <span class="token operator">:</span> array<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isBit</span><span class="token punctuation">(</span>each<span class="token punctuation">,</span> index<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span>
+                num1<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">^=</span>each<span class="token punctuation">;</span>
+            <span class="token keyword">else</span>
+                num2<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">^=</span>each<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">isBit</span><span class="token punctuation">(</span><span class="token keyword">int</span> num<span class="token punctuation">,</span> <span class="token keyword">int</span> index<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        num <span class="token operator">=</span> num<span class="token operator">>></span>index<span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span>num<span class="token operator">&amp;</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
 
             </div>
             <hr>
@@ -493,7 +523,7 @@
                     <span class="reprint-tip">转载请注明: </span>
                     <a href="http://yoursite.com" class="b-link-green">相由心生的博客</a>
                     <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
-                    <a href="/2018/12/23/常用画图工具推荐/" class="b-link-green">常用画图工具推荐</a>
+                    <a href="/2018/12/26/剑指offer数组中数字出现的次数/" class="b-link-green">剑指offer:数组中数字出现的次数</a>
                 </p>
             </div>
         </div>
@@ -515,7 +545,7 @@
         repo: '',
         owner: '',
         admin: null,
-        id: '2018-12-23T21-01-05',
+        id: '2018-12-26T08-47-12',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -537,41 +567,39 @@
     <div class="row article-row">
         
         <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge left-badge text-color">上一篇</div>
+            <div class="article-badge left-badge text-color">本篇</div>
             <div class="card">
-                <a href="/2018/12/24/最近5年133个Java面试问题列表/">
+                <a href="/2018/12/26/剑指offer数组中数字出现的次数/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="最近5年133个Java面试问题列表">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="剑指offer:数组中数字出现的次数">
                         
-                        <span class="card-title">最近5年133个Java面试问题列表</span>
+                        <span class="card-title">剑指offer:数组中数字出现的次数</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
-                    <div class="summary">本文转自知乎：极乐科技
-Java 面试随着时间的改变而改变。在过去的日子里，当你知道 String 和 StringBuilder 的区别（String 类型和 StringBuffer 类型的主要性能区别其实在于 String 是不可变的</div>
+                    <div class="summary">题目描述一个整型数组里除了两个数字之外，其他的数字都出现了偶数次。请写出程序找出这个两个出现一次的数字，要求时间复杂度O(n)，空间复杂度O(1)。
+牛客网链接
+分析看到这个题目，我首先想到遍历数组，用HashMap存放每个数组出现的次数，</div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2018-12-24
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-12-26
+                            </span>
                         <span class="publish-author">
                             
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/java面试题/" class="post-category" target="_blank">
-                                    java面试题
-                                </a>
-                            
+                            <i class="fa fa-user fa-fw"></i>
+                            付红玉
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/java面试题/" target="_blank">
-                        <span class="chip bg-color">java面试题</span>
+                    <a href="/tags/剑指offer/" target="_blank">
+                        <span class="chip bg-color">剑指offer</span>
                     </a>
                     
                 </div>
@@ -583,32 +611,29 @@ Java 面试随着时间的改变而改变。在过去的日子里，当你知道
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">下一篇</div>
             <div class="card">
-                <a href="/2018/12/23/JVM知识点梳理/">
+                <a href="/2018/12/24/先序、中序、后序遍历二叉树/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="JVM知识点梳理">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="先序、中序、后序遍历二叉树">
                         
-                        <span class="card-title">JVM知识点梳理</span>
+                        <span class="card-title">先序、中序、后序遍历二叉树</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
-                    <div class="summary">我复习java虚拟机用的是 周志明老师的《深入理解java虚拟机》这本书，同时结合极客时间上 郑雨迪老师讲的《深入拆解java虚拟机》。将重点知识在此进行梳理，方便日后回顾复习。
-本文部分图片和内容来源于CyC2018博客
+                    <div class="summary">先序、中序、后序遍历二叉树是一个基础又非常重要的知识点，频繁出现在《剑指offer》面试题中，很多题目都是二叉树遍历的变形。
+所以在本文章中，我总结了用递归和非递归的方法分别实现对二叉树的先序、中序和后序遍历。
+面试题54：二叉搜索树
 
-java内存模</div>
+递</div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-12-23
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-12-24
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/jvm/" class="post-category" target="_blank">
-                                    jvm
-                                </a>
-                            
+                            <i class="fa fa-user fa-fw"></i>
+                            付红玉
                             
                         </span>
                     </div>
@@ -616,8 +641,8 @@ java内存模</div>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/JVM/" target="_blank">
-                        <span class="chip bg-color">JVM</span>
+                    <a href="/tags/数据结构/" target="_blank">
+                        <span class="chip bg-color">数据结构</span>
                     </a>
                     
                 </div>
